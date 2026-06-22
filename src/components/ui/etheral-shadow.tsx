@@ -31,6 +31,7 @@ interface ShadowOverlayProps {
     noise?: NoiseConfig;
     style?: CSSProperties;
     className?: string;
+    calm?: boolean;
 }
 
 function mapRange(
@@ -60,10 +61,11 @@ export function Component({
     animation,
     noise,
     style,
-    className
+    className,
+    calm = false
 }: ShadowOverlayProps) {
     const id = useInstanceId();
-    const animationEnabled = animation && animation.scale > 0;
+    const animationEnabled = animation && animation.scale > 0 && !calm;
     const feColorMatrixRef = useRef<SVGFEColorMatrixElement>(null);
     const hueRotateMotionValue = useMotionValue(180);
     const hueRotateAnimation = useRef<AnimationPlaybackControls | null>(null);

@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
+import { useCalmMotion } from "@/lib/use-calm-motion";
 
 const goldGradient =
   "linear-gradient(100deg, #8c6b33 0%, #b68d4c 26%, #e6cf94 46%, #fff7e6 50%, #e6cf94 54%, #b68d4c 74%, #8c6b33 100%)";
@@ -62,6 +63,7 @@ function Word({
 
 export default function CraftStatement() {
   const ref = useRef<HTMLElement>(null);
+  const calm = useCalmMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
@@ -77,6 +79,7 @@ export default function CraftStatement() {
             animation={{ scale: 50, speed: 80 }}
             noise={{ opacity: 0.18, scale: 1.2 }}
             sizing="fill"
+            calm={calm}
           />
         </div>
 

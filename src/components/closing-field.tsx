@@ -2,11 +2,13 @@
 
 import { motion } from "framer-motion";
 import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
+import { useCalmMotion } from "@/lib/use-calm-motion";
 
 const grain =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
 
 export default function ClosingField() {
+  const calm = useCalmMotion();
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden bg-espresso">
       {/* Gold smoke */}
@@ -16,6 +18,7 @@ export default function ClosingField() {
           animation={{ scale: 50, speed: 78 }}
           noise={{ opacity: 0.18, scale: 1.2 }}
           sizing="fill"
+          calm={calm}
         />
       </div>
 
@@ -48,8 +51,8 @@ export default function ClosingField() {
         <motion.img
           src="/logo-mark.png"
           alt=""
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+          animate={calm ? undefined : { scale: [1, 1.05, 1] }}
+          transition={calm ? undefined : { duration: 22, repeat: Infinity, ease: "easeInOut" }}
           className="w-[50vw] max-w-[500px] opacity-[0.06]"
         />
       </motion.div>

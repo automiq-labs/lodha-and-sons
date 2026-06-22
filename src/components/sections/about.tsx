@@ -2,21 +2,22 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useCalmMotion } from "@/lib/use-calm-motion";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const goldGradient =
   "linear-gradient(100deg, #8c6b33 0%, #b68d4c 26%, #e6cf94 46%, #fff7e6 50%, #e6cf94 54%, #b68d4c 74%, #8c6b33 100%)";
 
-function Spark({ className = "" }: { className?: string }) {
+function Spark({ className = "", calm = false }: { className?: string; calm?: boolean }) {
   return (
     <motion.svg
       viewBox="0 0 24 24"
       className={className}
       fill="currentColor"
       aria-hidden
-      animate={{ rotate: [0, 90], opacity: [0.6, 1, 0.6] }}
-      transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      animate={calm ? undefined : { rotate: [0, 90], opacity: [0.6, 1, 0.6] }}
+      transition={calm ? undefined : { duration: 7, repeat: Infinity, ease: "easeInOut" }}
     >
       <path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" />
     </motion.svg>
@@ -27,10 +28,12 @@ function Gleam({
   children,
   className = "",
   duration = 6,
+  calm = false,
 }: {
   children: React.ReactNode;
   className?: string;
   duration?: number;
+  calm?: boolean;
 }) {
   return (
     <motion.span
@@ -40,8 +43,8 @@ function Gleam({
         backgroundSize: "250% 100%",
         WebkitBackgroundClip: "text",
       }}
-      animate={{ backgroundPosition: ["180% 50%", "-70% 50%"] }}
-      transition={{ duration, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
+      animate={calm ? undefined : { backgroundPosition: ["180% 50%", "-70% 50%"] }}
+      transition={calm ? undefined : { duration, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
     >
       {children}
     </motion.span>
@@ -100,6 +103,7 @@ const pillars = [
 
 export default function About() {
   const ref = useRef<HTMLElement>(null);
+  const calm = useCalmMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -125,8 +129,8 @@ export default function About() {
         <motion.img
           src="/logo-mark.png"
           alt=""
-          animate={{ scale: [1, 1.05, 1], rotate: [0, 0.8, 0] }}
-          transition={{ duration: 24, repeat: Infinity, ease: "easeInOut" }}
+          animate={calm ? undefined : { scale: [1, 1.05, 1], rotate: [0, 0.8, 0] }}
+          transition={calm ? undefined : { duration: 24, repeat: Infinity, ease: "easeInOut" }}
           className="w-[68vw] max-w-[680px] opacity-[0.06] mix-blend-multiply"
         />
       </motion.div>
@@ -138,11 +142,11 @@ export default function About() {
           transition={{ duration: 1, ease }}
           className="flex items-center justify-center gap-3"
         >
-          <Spark className="h-3 w-3 text-gold" />
+          <Spark className="h-3 w-3 text-gold" calm={calm} />
           <p className="font-sans text-[11px] uppercase tracking-[0.32em] text-gold-deep">
             The Founder
           </p>
-          <Spark className="h-3 w-3 text-gold" />
+          <Spark className="h-3 w-3 text-gold" calm={calm} />
         </motion.div>
 
         <motion.blockquote
@@ -154,7 +158,7 @@ export default function About() {
         >
           {quote.map((q, i) => (
             <motion.span key={i} variants={wordItem} className="mr-[0.22em] inline-block">
-              {q.gold ? <Gleam duration={5.5}>{q.w}</Gleam> : q.w}
+              {q.gold ? <Gleam duration={5.5} calm={calm}>{q.w}</Gleam> : q.w}
             </motion.span>
           ))}
         </motion.blockquote>
@@ -178,7 +182,7 @@ export default function About() {
         className="relative z-10 mx-auto my-12 flex max-w-2xl items-center gap-4 px-6 sm:my-16"
       >
         <span className="h-px flex-1 bg-line" />
-        <Spark className="h-3.5 w-3.5 text-gold" />
+        <Spark className="h-3.5 w-3.5 text-gold" calm={calm} />
         <span className="h-px flex-1 bg-line" />
       </motion.div>
 
@@ -215,7 +219,7 @@ export default function About() {
           transition={{ duration: 1, ease, delay: 0.18 }}
           className="mt-7 text-lg sm:text-xl"
         >
-          <Gleam className="font-display italic" duration={6.5}>
+          <Gleam className="font-display italic" duration={6.5} calm={calm}>
             Precision crafted. Exceptionally finished.
           </Gleam>
         </motion.p>

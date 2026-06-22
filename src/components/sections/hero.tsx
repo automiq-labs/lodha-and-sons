@@ -3,11 +3,13 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useCalmMotion } from "@/lib/use-calm-motion";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const calm = useCalmMotion();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
@@ -85,8 +87,8 @@ export default function Hero() {
               WebkitBackgroundClip: "text",
               filter: "drop-shadow(0 1px 2px rgba(70,50,20,0.35))",
             }}
-            animate={{ backgroundPosition: ["170% 50%", "-60% 50%"] }}
-            transition={{ duration: 5.5, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
+            animate={calm ? undefined : { backgroundPosition: ["170% 50%", "-60% 50%"] }}
+            transition={calm ? undefined : { duration: 5.5, repeat: Infinity, repeatDelay: 3, ease: "easeInOut" }}
           >
             LODHA &amp; SONS
           </motion.h1>
@@ -101,8 +103,8 @@ export default function Hero() {
           <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold/70" />
           <motion.svg
             width="14" height="14" viewBox="0 0 24 24" className="text-gold"
-            animate={{ rotate: [0, 90], opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            animate={calm ? undefined : { rotate: [0, 90], opacity: [0.7, 1, 0.7] }}
+            transition={calm ? undefined : { duration: 6, repeat: Infinity, ease: "easeInOut" }}
           >
             <path d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z" fill="currentColor" />
           </motion.svg>
@@ -128,8 +130,8 @@ export default function Hero() {
       >
         <span className="font-sans text-[9px] uppercase tracking-[0.3em] text-ink-muted">Scroll</span>
         <motion.span
-          animate={{ opacity: [0.2, 0.85, 0.2], scaleY: [0.7, 1, 0.7] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+          animate={calm ? undefined : { opacity: [0.2, 0.85, 0.2], scaleY: [0.7, 1, 0.7] }}
+          transition={calm ? undefined : { duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
           className="h-10 w-px origin-top bg-gradient-to-b from-gold to-transparent"
         />
       </motion.div>

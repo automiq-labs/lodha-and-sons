@@ -1,11 +1,13 @@
 "use client";
 
 import { Component as EtherealShadow } from "@/components/ui/etheral-shadow";
+import { useCalmMotion } from "@/lib/use-calm-motion";
 
 const grain =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E";
 
 export default function OpeningField() {
+  const calm = useCalmMotion();
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden">
       <div
@@ -21,6 +23,7 @@ export default function OpeningField() {
           animation={{ scale: 55, speed: 95 }}
           noise={{ opacity: 0.15, scale: 1.3 }}
           sizing="fill"
+          calm={calm}
         />
       </div>
       <div

@@ -79,45 +79,20 @@ function GalleryTile({ tile, fill = false }: { tile: Tile; fill?: boolean }) {
   );
 }
 
-function MobileTile({ tile, index, feature = false }: { tile: Tile; index: number; feature?: boolean }) {
+function MobileTile({ tile, feature = false }: { tile: Tile; index?: number; feature?: boolean }) {
   return (
     <figure
-      className={`group relative overflow-hidden border border-line bg-white ${
+      className={`relative overflow-hidden border border-line bg-white ${
         feature ? "aspect-[3/2]" : "aspect-[4/5]"
       }`}
     >
-      <motion.div
-        className="absolute inset-0"
-        animate={{ scale: [1, 1.05, 1] }}
-        transition={{ duration: 9 + (index % 4), repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }}
-      >
-        <Image
-          src={tile.src}
-          alt={tile.alt}
-          fill
-          sizes={feature ? "100vw" : "50vw"}
-          className={`object-contain ${feature ? "p-6" : "p-3"}`}
-        />
-      </motion.div>
-
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        initial={{ x: "-130%" }}
-        animate={{ x: "160%" }}
-        transition={{
-          duration: feature ? 1.9 : 1.5,
-          repeat: Infinity,
-          repeatDelay: 3.5 + (index % 4),
-          ease: "easeInOut",
-          delay: index * 0.35,
-        }}
-        style={{
-          background:
-            "linear-gradient(105deg, transparent 38%, rgba(255,247,230,0.5) 50%, transparent 62%)",
-        }}
+      <Image
+        src={tile.src}
+        alt={tile.alt}
+        fill
+        sizes={feature ? "100vw" : "50vw"}
+        className={`object-contain ${feature ? "p-6" : "p-3"}`}
       />
-
       <figcaption className="absolute bottom-0 left-0 flex items-center gap-2 p-3 sm:p-4">
         <span className="h-px w-4 bg-gold/50 sm:w-5" />
         <span className="font-sans text-[9px] uppercase tracking-[0.22em] text-ink-muted sm:text-[10px] sm:tracking-[0.25em]">
